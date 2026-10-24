@@ -100,24 +100,28 @@ def prob_i_to_j(i,j,Posterior_Matrix,Old_Transition_Matrix,timestamp):
     print(Posterior_Matrix[timestamp-1][4])
     print(Old_Transition_Matrix[4][j])
     #prob_state_i=np.array([Posterior_Matrix[timestamp-1]*Old_Transition_Matrix[:,j]]).sum(axis=0)
-    elem=np.array([Posterior_Matrix[timestamp-1][q]*Old_Transition_Matrix[q][j] for q in range(k)])
+    elem=np.array([Posterior_Matrix[timestamp-1][q]*Old_Transition_Matrix[q][i] for q in range(k)])
     elem=elem.sum(axis=0)
+
+    # so as of now to get total prob as multiplying the probabilities 
+    prob_state_i=np.sum(elem)
+
     
     #now the probability that we came from the state i given that next state is j is given by
-    p_i_to_j=Posterior_Matrix[timestamp-1][i]*Old_Transition_Matrix[i][j]*(1/prob_state_i)
-    return p_i_to_j
+    p_i_to_j=Posterior_Matrix[timestamp][i]*Old_Transition_Matrix[i][j]*(1/prob_state_i)
+    return np.sum(p_i_to_j)
 
-A=np.array([[1,2],[2,3]])
-B=np.array([1,2])
-print(A.shape)
-print(B.shape)
 
-P=prob_i_to_j(2,3,Posterior_Matrix,Intial_Transition_probabilities,timestamp)
+
+P=prob_i_to_j(2,3,Posterior_Matrix,Intial_Transition_probabilities,timestamp-1)
+print('woahh')
 print(P)
 '''
 def constructing_probability_matrix(mean_cluster, )
 
 print(mean_cluster)
+
+
 
 '''
 
